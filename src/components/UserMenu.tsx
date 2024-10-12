@@ -10,12 +10,18 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { PersonIcon } from "@radix-ui/react-icons";
-import { ReactNode } from "react";
+import { api } from "../../convex/_generated/api";
+import { useQuery } from "convex/react";
 
-export function UserMenu({ children }: { children: ReactNode }) {
+export const UserMenu: React.FC = () => {
+  const user = useQuery(api.users.viewer);
+
+  if (!user) return null;
+  const name = user.name ?? user.email;
+
   return (
     <div className="flex items-center gap-2 text-sm font-medium">
-      {children}
+      {name}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="secondary" size="icon" className="rounded-full">
@@ -24,7 +30,7 @@ export function UserMenu({ children }: { children: ReactNode }) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>{children}</DropdownMenuLabel>
+          <DropdownMenuLabel>{name}</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuLabel className="flex items-center gap-2 py-0 font-normal">
             Theme
@@ -35,7 +41,7 @@ export function UserMenu({ children }: { children: ReactNode }) {
       </DropdownMenu>
     </div>
   );
-}
+};
 
 function SignOutButton() {
   const { signOut } = useAuthActions();

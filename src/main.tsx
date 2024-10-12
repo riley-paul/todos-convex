@@ -5,6 +5,7 @@ import { ThemeProvider } from "next-themes";
 import { ConvexReactClient } from "convex/react";
 import App from "./App.tsx";
 import "./index.css";
+import '@fontsource-variable/rubik';
 
 const convex = new ConvexReactClient(import.meta.env.VITE_CONVEX_URL as string);
 
