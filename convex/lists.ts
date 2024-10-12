@@ -42,5 +42,12 @@ export const remove = mutation({
     const userId = await getUserId(ctx);
     checkOwner(userId, await ctx.db.get(listId));
     await ctx.db.delete(listId);
+    await ctx.db
+      .query("todos")
+      .filter((q) => q.eq(q.field("listId"), listId))
+      .collect()
+      .then((todos) =>
+        Promise.all(todos.map((todo) => ctx.db.delete(todo._id))),
+      );
   },
 });

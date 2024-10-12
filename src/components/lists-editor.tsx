@@ -55,7 +55,7 @@ const List: React.FC<{
         />
       ) : (
         <span
-          className="flex-1"
+          className="flex-1 cursor-pointer select-none"
           onClick={() => setIsEditing(true)}
           onKeyDown={(e) => {
             if (e.key === "Enter") setIsEditing(true);
@@ -113,6 +113,7 @@ const ListsEditor: React.FC<Props> = (props) => {
           <SingleInputForm
             clearAfterSubmit
             initialValue=""
+            inputProps={{ placeholder: "Enter list name" }}
             handleSubmit={(name) => {
               createList({ name })
                 .then(() => {

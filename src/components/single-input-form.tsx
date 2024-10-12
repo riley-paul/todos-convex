@@ -9,7 +9,8 @@ type Props = {
   initialValue: string;
   handleSubmit: (value: string) => void;
   className?: string;
-  buttonPtops?: ButtonProps;
+  buttonProps?: ButtonProps;
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
   clearAfterSubmit?: boolean;
 };
 
@@ -17,7 +18,8 @@ const SingleInputForm: React.FC<Props> = ({
   initialValue,
   handleSubmit,
   className,
-  buttonPtops,
+  buttonProps,
+  inputProps,
   clearAfterSubmit,
 }) => {
   const [value, setValue] = React.useState(initialValue);
@@ -40,6 +42,7 @@ const SingleInputForm: React.FC<Props> = ({
         value={value}
         placeholder="Enter some text"
         onChange={(e) => setValue(e.target.value)}
+        {...inputProps}
       />
       <Button
         type="submit"
@@ -51,8 +54,8 @@ const SingleInputForm: React.FC<Props> = ({
             <span>Save</span>
           </>
         }
-        {...buttonPtops}
-        className={cn("h-full", buttonPtops?.className)}
+        {...buttonProps}
+        className={cn("h-full", buttonProps?.className)}
       />
       <input type="submit" className="hidden" />
     </form>
