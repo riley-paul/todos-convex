@@ -27,7 +27,7 @@ const Lists: React.FC = () => {
   const lists = useQuery(api.lists.list);
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-2 px-3">
       <List value={undefined} name="Inbox" />
       <List value={"all"} name="All" />
       <div className="flex items-center">
@@ -36,7 +36,10 @@ const Lists: React.FC = () => {
       {lists?.map((list) => (
         <List key={list._id} value={list._id} name={list.name} />
       ))}
-      <Badge className="cursor-pointer select-none font-normal" variant="ghost">
+      <Badge
+        className="cursor-pointer select-none font-normal px-1.5"
+        variant="ghost"
+      >
         <Edit className="size-3 mr-1.5" />
         <span>Edit lists</span>
       </Badge>

@@ -10,7 +10,7 @@ export default function App() {
     <>
       <Authenticated>
         <Header />
-        <main className="max-w-screen-sm mx-auto grid gap-6 py-6 px-4">
+        <main className="max-w-screen-sm mx-auto grid gap-6 py-6 px-2">
           <Adder />
           <Lists />
           <TodoList />

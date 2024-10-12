@@ -16,7 +16,7 @@ const Adder: React.FC = () => {
 
   return (
     <form
-      className="flex gap-2"
+      className="flex gap-2 px-3"
       onSubmit={(e) => {
         e.preventDefault();
         createTodo({ text: value, listId: selectedList })
@@ -24,9 +24,9 @@ const Adder: React.FC = () => {
             toast.success("Task added", { description: value });
             setValue("");
           })
-          .catch((error) =>
-            toast.error("Failed to add task", { description: error.message }),
-          );
+          .catch((error) => {
+            toast.error("Failed to add task", { description: error.message });
+          });
       }}
     >
       <Input
@@ -34,6 +34,7 @@ const Adder: React.FC = () => {
         placeholder="What needs doing?"
         value={value}
         onChange={(e) => setValue(e.target.value)}
+        onFocus={(e) => e.target.select()}
       />
       <Button type="submit">
         <Plus className="size-5 mr-2" />
