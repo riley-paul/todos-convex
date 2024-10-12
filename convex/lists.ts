@@ -9,7 +9,11 @@ export const list = query({
     return Promise.all(
       lists.map(async (list) => {
         const { name, email } = (await ctx.db.get(list.userId))!;
-        return { ...list, author: name ?? email! };
+        const todos = await ctx.db
+          .query("todos")
+          .filter((q) => q.eq(q.field("listId"), list._id))
+          .collect();
+        return { ...list, author: name ?? email!, count: todos.length };
       }),
     );
   },

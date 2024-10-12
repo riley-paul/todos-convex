@@ -9,8 +9,7 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { useEventListener, useOnClickOutside } from "usehooks-ts";
 import { Button } from "./ui/button";
-import { Save, X } from "lucide-react";
-import { Input } from "./ui/input";
+import { X } from "lucide-react";
 import SingleInputForm from "./single-input-form";
 
 const Todo: React.FC<{ todo: Doc<"todos"> }> = ({ todo }) => {
