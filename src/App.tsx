@@ -4,6 +4,7 @@ import { Authenticated, Unauthenticated, useQuery } from "convex/react";
 import { api } from "../convex/_generated/api";
 import Header from "./header";
 import Lists from "./components/lists";
+import Adder from "./components/adder";
 
 export default function App() {
   const user = useQuery(api.users.viewer);
@@ -12,6 +13,7 @@ export default function App() {
       <Authenticated>
         <Header />
         <main className="max-w-screen-sm mx-auto grid gap-6 py-6">
+          <Adder />
           <Lists />
           <Chat viewer={(user ?? {})._id!} />
         </main>
