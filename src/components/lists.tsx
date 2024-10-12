@@ -7,7 +7,7 @@ import { selectedListAtom } from "@/lib/store";
 import { Separator } from "./ui/separator";
 import { Edit } from "lucide-react";
 
-const List: React.FC<{ value: string | null; name: string }> = ({
+const List: React.FC<{ value: string | undefined; name: string }> = ({
   value,
   name,
 }) => {
@@ -28,7 +28,7 @@ const Lists: React.FC = () => {
 
   return (
     <div className="flex flex-wrap gap-2">
-      <List value={null} name="Inbox" />
+      <List value={undefined} name="Inbox" />
       <List value={"all"} name="All" />
       <div className="flex items-center">
         <Separator orientation="vertical" className="h-5" />

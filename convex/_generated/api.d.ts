@@ -20,6 +20,7 @@ import type * as auth from "../auth.js";
 import type * as http from "../http.js";
 import type * as lists from "../lists.js";
 import type * as messages from "../messages.js";
+import type * as todos from "../todos.js";
 import type * as users from "../users.js";
 
 /**
@@ -36,6 +37,7 @@ declare const fullApi: ApiFromModules<{
   http: typeof http;
   lists: typeof lists;
   messages: typeof messages;
+  todos: typeof todos;
   users: typeof users;
 }>;
 export declare const api: FilterApi<

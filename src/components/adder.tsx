@@ -5,18 +5,28 @@ import { useAtomValue } from "jotai/react";
 import { selectedListAtom } from "@/lib/store";
 import { toast } from "sonner";
 import { Plus } from "lucide-react";
+import { useMutation } from "convex/react";
+import { api } from "../../convex/_generated/api";
 
 const Adder: React.FC = () => {
   const selectedList = useAtomValue(selectedListAtom);
   const [value, setValue] = React.useState("");
+
+  const createTodo = useMutation(api.todos.create);
 
   return (
     <form
       className="flex gap-2"
       onSubmit={(e) => {
         e.preventDefault();
-        toast.success("Task added", { description: value });
-        setValue("");
+        createTodo({ text: value, listId: selectedList })
+          .then(() => {
+            toast.success("Task added", { description: value });
+            setValue("");
+          })
+          .catch((error) =>
+            toast.error("Failed to add task", { description: error.message }),
+          );
       }}
     >
       <Input
