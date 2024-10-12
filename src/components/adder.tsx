@@ -19,6 +19,10 @@ const Adder: React.FC = () => {
       className="flex gap-2 px-3"
       onSubmit={(e) => {
         e.preventDefault();
+        if (value.length === 0) {
+          toast.error("Task cannot be empty");
+          return;
+        }
         createTodo({ text: value, listId: selectedList })
           .then(() => {
             toast.success("Task added", { description: value });
@@ -36,7 +40,7 @@ const Adder: React.FC = () => {
         onChange={(e) => setValue(e.target.value)}
         onFocus={(e) => e.target.select()}
       />
-      <Button type="submit">
+      <Button type="submit" disabled={value.length === 0}>
         <Plus className="size-5 mr-2" />
         <span>Add</span>
       </Button>

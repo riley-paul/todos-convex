@@ -22,6 +22,10 @@ const TodoEditor: React.FC<{
       className="flex gap-2 w-full h-8"
       onSubmit={(e) => {
         e.preventDefault();
+        if (value.length === 0) {
+          toast.error("Task cannot be empty");
+          return;
+        }
         updateValue(value);
       }}
     >
@@ -29,9 +33,15 @@ const TodoEditor: React.FC<{
         className="h-full"
         autoFocus
         value={value}
+        placeholder="Enter some text"
         onChange={(e) => setValue(e.target.value)}
       />
-      <Button type="submit" className="h-full" variant="secondary">
+      <Button
+        type="submit"
+        className="h-full"
+        variant="secondary"
+        disabled={value.length === 0}
+      >
         <Save className="size-4 mr-2" />
         <span>Save</span>
       </Button>
