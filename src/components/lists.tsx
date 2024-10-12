@@ -5,7 +5,8 @@ import { Badge } from "./ui/badge";
 import { useAtom } from "jotai/react";
 import { selectedListAtom } from "@/lib/store";
 import { Separator } from "./ui/separator";
-import { Edit } from "lucide-react";
+import { Pencil } from "lucide-react";
+import ListsEditor from "./lists-editor";
 
 const List: React.FC<{ value: string | undefined; name: string }> = ({
   value,
@@ -14,7 +15,7 @@ const List: React.FC<{ value: string | undefined; name: string }> = ({
   const [selectedList, setSelectedList] = useAtom(selectedListAtom);
   return (
     <Badge
-      className="cursor-pointer select-none"
+      className="cursor-pointer select-none h-6"
       variant={selectedList === value ? "default" : "secondary"}
       onClick={() => setSelectedList(value)}
     >
@@ -25,6 +26,7 @@ const List: React.FC<{ value: string | undefined; name: string }> = ({
 
 const Lists: React.FC = () => {
   const lists = useQuery(api.lists.list);
+  const [editorIsOpen, setEditorIsOpen] = React.useState(false);
 
   return (
     <div className="flex flex-wrap gap-2 px-3">
@@ -37,12 +39,14 @@ const Lists: React.FC = () => {
         <List key={list._id} value={list._id} name={list.name} />
       ))}
       <Badge
-        className="cursor-pointer select-none font-normal px-1.5"
+        className="cursor-pointer select-none font-normal px-1.5 h-6"
         variant="ghost"
+        onClick={() => setEditorIsOpen(true)}
       >
-        <Edit className="size-3 mr-1.5" />
-        <span>Edit lists</span>
+        <Pencil className="size-3" />
+        {/* <span>Edit lists</span> */}
       </Badge>
+      <ListsEditor isOpen={editorIsOpen} setIsOpen={setEditorIsOpen} />
     </div>
   );
 };

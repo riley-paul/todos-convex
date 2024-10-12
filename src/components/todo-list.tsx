@@ -11,44 +11,7 @@ import { useEventListener, useOnClickOutside } from "usehooks-ts";
 import { Button } from "./ui/button";
 import { Save, X } from "lucide-react";
 import { Input } from "./ui/input";
-
-const TodoEditor: React.FC<{
-  initialValue: string;
-  updateValue: (value: string) => void;
-}> = ({ initialValue, updateValue }) => {
-  const [value, setValue] = React.useState(initialValue);
-  return (
-    <form
-      className="flex gap-2 w-full h-8"
-      onSubmit={(e) => {
-        e.preventDefault();
-        if (value.length === 0) {
-          toast.error("Task cannot be empty");
-          return;
-        }
-        updateValue(value);
-      }}
-    >
-      <Input
-        className="h-full"
-        autoFocus
-        value={value}
-        placeholder="Enter some text"
-        onChange={(e) => setValue(e.target.value)}
-      />
-      <Button
-        type="submit"
-        className="h-full"
-        variant="secondary"
-        disabled={value.length === 0}
-      >
-        <Save className="size-4 mr-2" />
-        <span>Save</span>
-      </Button>
-      <input type="submit" className="hidden" />
-    </form>
-  );
-};
+import SingleInputForm from "./single-input-form";
 
 const Todo: React.FC<{ todo: Doc<"todos"> }> = ({ todo }) => {
   const updateTodo = useMutation(api.todos.update);
@@ -68,9 +31,10 @@ const Todo: React.FC<{ todo: Doc<"todos"> }> = ({ todo }) => {
       className="hover:bg-muted/20 px-3 py-1 min-h-10 rounded transition-colors ease-out text-sm flex gap-2 items-center"
     >
       {isEditing ? (
-        <TodoEditor
+        <SingleInputForm
+          className="h-8"
           initialValue={todo.text}
-          updateValue={(value) => {
+          handleSubmit={(value) => {
             updateTodo({ todoId: todo._id, text: value })
               .then(() => {
                 toast.success("Task updated");
