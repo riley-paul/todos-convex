@@ -6,21 +6,25 @@ import { useToast } from "@/components/ui/use-toast";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
+import { Label } from "./components/ui/label";
 
-export function SignInForm() {
+export const SignInForm: React.FC = () => {
   const [step, setStep] = useState<"signIn" | "linkSent">("signIn");
 
   return (
-    <div className="container my-auto">
-      <div className="max-w-[384px] mx-auto flex flex-col my-auto gap-4 pb-8">
+    <main className="min-h-screen flex items-center justify-center">
+      <Card className="max-w-[500px] w-full">
         {step === "signIn" ? (
           <>
-            <h2 className="font-semibold text-2xl tracking-tight">
-              Sign in or create an account
-            </h2>
-            <SignInWithGitHub />
-            <SignInMethodDivider />
-            <SignInWithMagicLink handleLinkSent={() => setStep("linkSent")} />
+            <CardHeader>
+              <CardTitle>Sign in or create an account</CardTitle>
+            </CardHeader>
+            <CardContent className="grid gap-4">
+              <SignInWithGitHub />
+              <SignInMethodDivider />
+              <SignInWithMagicLink handleLinkSent={() => setStep("linkSent")} />
+            </CardContent>
           </>
         ) : (
           <>
@@ -37,16 +41,15 @@ export function SignInForm() {
             </Button>
           </>
         )}
-      </div>
-    </div>
+      </Card>
+    </main>
   );
-}
+};
 
 export function SignInWithGitHub() {
   const { signIn } = useAuthActions();
   return (
     <Button
-      className="flex-1"
       variant="outline"
       type="button"
       onClick={() => void signIn("github")}
@@ -56,16 +59,14 @@ export function SignInWithGitHub() {
   );
 }
 
-function SignInWithMagicLink({
-  handleLinkSent,
-}: {
+const SignInWithMagicLink: React.FC<{
   handleLinkSent: () => void;
-}) {
+}> = ({ handleLinkSent }) => {
   const { signIn } = useAuthActions();
   const { toast } = useToast();
   return (
     <form
-      className="flex flex-col"
+      className="grid gap-2"
       onSubmit={(event) => {
         event.preventDefault();
         const formData = new FormData(event.currentTarget);
@@ -80,10 +81,16 @@ function SignInWithMagicLink({
           });
       }}
     >
-      <label htmlFor="email">Email</label>
-      <Input name="email" id="email" className="mb-4" autoComplete="email" />
+      <Label htmlFor="email">Email</Label>
+      <Input
+        name="email"
+        id="email"
+        className="mb-4"
+        autoComplete="email"
+        placeholder="hello@example.com"
+      />
       <Button type="submit">Send sign-in link</Button>
       <Toaster />
     </form>
   );
-}
+};
