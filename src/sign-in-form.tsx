@@ -6,32 +6,48 @@ import { useToast } from "@/components/ui/use-toast";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "./components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./components/ui/card";
 import { Label } from "./components/ui/label";
+import { CircleCheckBig } from "lucide-react";
 
 export const SignInForm: React.FC = () => {
   const [step, setStep] = useState<"signIn" | "linkSent">("signIn");
 
   return (
-    <main className="min-h-screen flex items-center justify-center">
-      <Card className="max-w-[500px] w-full">
-        {step === "signIn" ? (
-          <>
-            <CardHeader>
-              <CardTitle>Sign in or create an account</CardTitle>
-            </CardHeader>
-            <CardContent className="grid gap-4">
-              <SignInWithGitHub />
-              <SignInMethodDivider />
-              <SignInWithMagicLink handleLinkSent={() => setStep("linkSent")} />
-            </CardContent>
-          </>
-        ) : (
-          <>
-            <h2 className="font-semibold text-2xl tracking-tight">
-              Check your email
-            </h2>
-            <p>A sign-in link has been sent to your email address.</p>
+    <Card className="max-w-[500px] w-full">
+      <div className="p-7 flex flex-col justify-center items-center gap-3">
+        <CircleCheckBig className="size-12 text-primary" />
+        <h1 className="text-4xl tracking-tight font-bold">Todos</h1>
+      </div>
+      {step === "signIn" ? (
+        <>
+          <CardHeader>
+            <CardTitle className="text-center">
+              Sign in or create an account
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="grid gap-4">
+            <SignInWithGitHub />
+            <SignInMethodDivider />
+            <SignInWithMagicLink handleLinkSent={() => setStep("linkSent")} />
+          </CardContent>
+        </>
+      ) : (
+        <>
+          <CardHeader>
+            <CardTitle>Check your email</CardTitle>
+            <CardDescription>
+              A sign-in link has been sent to your email address.
+            </CardDescription>
+          </CardHeader>
+          <CardFooter>
             <Button
               className="p-0 self-start"
               variant="link"
@@ -39,10 +55,10 @@ export const SignInForm: React.FC = () => {
             >
               Cancel
             </Button>
-          </>
-        )}
-      </Card>
-    </main>
+          </CardFooter>
+        </>
+      )}
+    </Card>
   );
 };
 
