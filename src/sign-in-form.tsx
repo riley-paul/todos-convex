@@ -1,8 +1,6 @@
 import { SignInMethodDivider } from "@/components/SignInMethodDivider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Toaster } from "@/components/ui/toaster";
-import { useToast } from "@/components/ui/use-toast";
 import { useAuthActions } from "@convex-dev/auth/react";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { useState } from "react";
@@ -16,6 +14,7 @@ import {
 } from "./components/ui/card";
 import { Label } from "./components/ui/label";
 import { CircleCheckBig } from "lucide-react";
+import { toast } from "sonner";
 
 export const SignInForm: React.FC = () => {
   const [step, setStep] = useState<"signIn" | "linkSent">("signIn");
@@ -79,7 +78,6 @@ const SignInWithMagicLink: React.FC<{
   handleLinkSent: () => void;
 }> = ({ handleLinkSent }) => {
   const { signIn } = useAuthActions();
-  const { toast } = useToast();
   return (
     <form
       className="grid gap-2"
@@ -90,10 +88,7 @@ const SignInWithMagicLink: React.FC<{
           .then(handleLinkSent)
           .catch((error) => {
             console.error(error);
-            toast({
-              title: "Could not send sign-in link",
-              variant: "destructive",
-            });
+            toast.error("Could not send sign-in link");
           });
       }}
     >
@@ -106,7 +101,6 @@ const SignInWithMagicLink: React.FC<{
         placeholder="hello@example.com"
       />
       <Button type="submit">Send sign-in link</Button>
-      <Toaster />
     </form>
   );
 };
