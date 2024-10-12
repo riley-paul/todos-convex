@@ -8,9 +8,8 @@ import { Checkbox } from "./ui/checkbox";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { useEventListener, useOnClickOutside } from "usehooks-ts";
-import { Button } from "./ui/button";
-import { X } from "lucide-react";
 import SingleInputForm from "./single-input-form";
+import DeleteButton from "./ui/delete-button";
 
 const Todo: React.FC<{ todo: Doc<"todos"> }> = ({ todo }) => {
   const updateTodo = useMutation(api.todos.update);
@@ -74,10 +73,8 @@ const Todo: React.FC<{ todo: Doc<"todos"> }> = ({ todo }) => {
           >
             {todo.text}
           </span>
-          <Button
-            variant="ghost"
-            className="size-7 p-0 text-muted-foreground rounded-full"
-            onClick={() => {
+          <DeleteButton
+            handleDelete={() => {
               deleteTodo({ todoId: todo._id })
                 .then(() => toast.success("Task deleted"))
                 .catch((error) => {
@@ -86,9 +83,7 @@ const Todo: React.FC<{ todo: Doc<"todos"> }> = ({ todo }) => {
                   });
                 });
             }}
-          >
-            <X className="size-4 shrink-0" />
-          </Button>
+          />
         </>
       )}
     </li>

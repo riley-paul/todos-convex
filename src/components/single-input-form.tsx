@@ -10,6 +10,7 @@ type Props = {
   handleSubmit: (value: string) => void;
   className?: string;
   buttonPtops?: ButtonProps;
+  clearAfterSubmit?: boolean;
 };
 
 const SingleInputForm: React.FC<Props> = ({
@@ -17,6 +18,7 @@ const SingleInputForm: React.FC<Props> = ({
   handleSubmit,
   className,
   buttonPtops,
+  clearAfterSubmit,
 }) => {
   const [value, setValue] = React.useState(initialValue);
   return (
@@ -29,6 +31,7 @@ const SingleInputForm: React.FC<Props> = ({
           return;
         }
         handleSubmit(value);
+        if (clearAfterSubmit) setValue("");
       }}
     >
       <Input
